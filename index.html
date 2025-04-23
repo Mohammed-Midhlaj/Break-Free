@@ -69,7 +69,12 @@
             font-size: 6rem;
             color: #ff6b6b;
             text-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
-            animation: neonGlow 1.5s ease-in-out infinite alternate;
+            animation: neonGlow 1.5s ease-in-out infinite alternate, float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
         .hero-content p {
             font-size: 1.8rem;
@@ -89,20 +94,59 @@
             border: none;
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            transition: transform 0.5s, box-shadow 0.5s;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            height: 400px;
+            position: relative;
+            margin-bottom: 30px;
         }
         .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 107, 107, 0.4);
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-front {
+            background: rgba(255, 255, 255, 0.15);
+            z-index: 2;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(45deg, #ff6b6b, #4a6cd4);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
         .card-img-top {
+            width: 100%;
             height: 200px;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.8s;
+            border-radius: 15px 15px 0 0;
         }
-        .card:hover .card-img-top {
-            transform: scale(1.1);
+        .card-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-title {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .card-text {
+            color: #e0e0e0;
         }
         .interactive-section {
             background: linear-gradient(to right, #ff6b6b, #4a6cd4);
@@ -150,11 +194,12 @@
             border: none;
             transition: all 0.4s;
             box-shadow: 0 0 12px rgba(255, 107, 107, 0.6);
+            animation: buttonGlow 2s infinite;
         }
-        .btn-vibe:hover {
-            background: #4a6cd4;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(74, 108, 212, 0.6);
+        @keyframes buttonGlow {
+            0% { box-shadow: 0 0 12px rgba(255, 107, 107, 0.6); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+            100% { box-shadow: 0 0 12px rgba(255, 107, 107, 0.6); }
         }
         .footer {
             background: #1a1a2e;
@@ -236,32 +281,59 @@
     <!-- Dangers Section -->
     <section id="dangers" class="section">
         <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up" style="font-family: 'Bebas Neue', sans-serif; color: #ff6b6b;">How Drugs Crash Your Vibe</h2>
+            <h2 class="text-center mb-5" data-aos="fade-up" data-aos-duration="1000" style="font-family: 'Bebas Neue', sans-serif; color: #ff6b6b;">How Drugs Crash Your Vibe</h2>
             <div class="row">
-                <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="100">
+                <div class="col-md-4" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="100">
                     <div class="card">
-                        <img src="chaotic life.jpg" class="card-img-top" alt="Health Damage">
-                        <div class="card-body">
-                            <h5 class="card-title">Health Damage</h5>
-                            <p class="card-text">Drugs fry your brain, wreck your body, and steal your energy.</p>
+                        <div class="card-front">
+                            <img src="chaotic life.jpg" class="card-img-top" alt="Health Damage">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Health Damage</h5>
+                                    <p class="card-text">Drugs fry your brain, wreck your body, and steal your energy.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Health Impact</h3>
+                            <p>Learn more about the physical effects</p>
+                            <button class="btn btn-light mt-3">Read More</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="col-md-4" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
                     <div class="card">
-                        <img src="mental health.jpg" class="card-img-top" alt="Mental Chaos">
-                        <div class="card-body">
-                            <h5 class="card-title">Mental Chaos</h5>
-                            <p class="card-text">Anxiety, depression, and paranoia—drugs mess with your mind.</p>
+                        <div class="card-front">
+                            <img src="mental health.jpg" class="card-img-top" alt="Mental Chaos">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Mental Chaos</h5>
+                                    <p class="card-text">Anxiety, depression, and paranoia—drugs mess with your mind.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Mental Effects</h3>
+                            <p>Understand the psychological impact</p>
+                            <button class="btn btn-light mt-3">Read More</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="300">
+                <div class="col-md-4" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="300">
                     <div class="card">
-                        <img src="llife drain.jpg" class="card-img-top" alt="Life Drain">
-                        <div class="card-body">
-                            <h5 class="card-title">Life Drain</h5>
-                            <p class="card-text">Lose friends, cash, and dreams to addiction’s grip.</p>
+                        <div class="card-front">
+                            <img src="llife drain.jpg" class="card-img-top" alt="Life Drain">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Life Drain</h5>
+                                    <p class="card-text">Lose friends, cash, and dreams to addiction's grip.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Life Impact</h3>
+                            <p>See how addiction affects daily life</p>
+                            <button class="btn btn-light mt-3">Read More</button>
                         </div>
                     </div>
                 </div>
@@ -381,8 +453,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init();
+        // Initialize AOS with more options
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true,
+            offset: 100
+        });
 
         function startRevolution() {
             alert("You're starting a revolution! Share this to keep the vibe alive.");
@@ -392,25 +469,69 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced card animations
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.addEventListener('mouseenter', () => {
+                const rotation = index % 2 === 0 ? 'rotateY(180deg)' : 'rotateX(180deg)';
+                card.style.transform = `${rotation} scale(1.1)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0deg) scale(1)';
+            });
+        });
+
+        // Add random rotation on scroll
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.card').forEach((card, index) => {
+                const scrollPosition = window.pageYOffset;
+                const rotation = (scrollPosition * 0.1 + index * 30) % 360;
+                if (!card.matches(':hover')) {
+                    card.style.transform = `rotate(${rotation}deg)`;
+                }
             });
         });
 
         // Parallax effect for hero section
         window.addEventListener('scroll', function () {
             const hero = document.querySelector('.hero-section');
-            let scrollPosition = window.pageYOffset;
+            const scrollPosition = window.pageYOffset;
             hero.style.backgroundPositionY = scrollPosition * 0.7 + 'px';
         });
 
-        // Flip card interaction
-        document.querySelectorAll('.interactive-card').forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('flipped');
+        // Enhanced button hover effect
+        document.querySelectorAll('.btn-vibe').forEach(button => {
+            button.addEventListener('mouseover', () => {
+                button.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+            button.addEventListener('mouseout', () => {
+                button.style.transform = 'scale(1) rotate(0deg)';
             });
         });
+
+        // Add typing effect to hero text
+        const heroText = document.querySelector('.hero-content p');
+        const text = heroText.textContent;
+        heroText.textContent = '';
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroText.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        typeWriter();
 
         // Scroll reveal for prevention tips
         const tips = document.querySelectorAll('.tip');
